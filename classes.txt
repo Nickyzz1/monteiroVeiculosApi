@@ -1,0 +1,83 @@
+ciar model vehicle
+criar model user
+criar model category
+criar model infos
+
+ciar rotas vehicle
+criar rotas user
+criar rotas category
+criar rotas infos
+
+ciar dtos crud service vehicle
+criar dtos crud service user
+criar dtos crud service category
+criar  dtos crud service infos
+
+ciar crud service vehicle
+criar crud service user
+criar crud service category
+criar crud service infos
+
+ciar midware vehicle
+criar midware user
+criar midware category
+criar midware infos
+
+ciar implementation vehicle
+criar implementation user
+criar implementation category
+criar implementation infos
+
+ciar controller vehicle
+criar controller user
+criar controller category
+criar controller infos
+
+criar bd
+criar relação com bd
+configurar JWT
+comfigurar criptografia
+configurar comunicação com server de imagens
+
+
+front ----
+
+criar projeto react next
+instalar dependencias next, tailwind, ts, mui
+criar app
+criar constantes
+
+criar rotas home
+criar rotas intocategory
+criar rotas intoCar
+criar rotas sale
+criar rotas aboutUs
+criar rotas homeAdmin
+criar rotas intocategoryAdmin
+criar rotas intoCarAdmin
+criar rotas profileAdmim
+criar rotas createCar
+criar rotas editCar
+
+criar page home
+criar page intocategory
+criar page intoCar
+criar page sale
+criar page aboutUs
+criar page homeAdmin
+criar page intocategoryAdmin
+criar page intoCarAdmin
+criar page profileAdmim
+criar page createcar
+criar page editCar
+
+criar modais de exclusão carro
+criar modais de exclusão categoria
+criar modais de confirmação
+criar modal de adicionar admin
+criar modal de mostrar consta e logout
+
+
+
+
+

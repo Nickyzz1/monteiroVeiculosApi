@@ -1,0 +1,45 @@
+veículo  {
+    id: string
+    Marca: enum(marcas)
+    Modelo: string 
+    Versão : string 
+    Ano de fabricação: number
+    Placa: string 
+    Renavam: string 
+    Chassi: string 
+    Quilometragem: number
+    Tipo de combustível: enum (gasolina, alcool, disel, elétrico, híbrido)
+    Câmbio: enum (Manual, Automático, CVT)
+    Categoria: enum(Hatch, Sedan, SUV, Picape, etc.)
+    Cor: string
+    Número de portas: number
+    Capacidade de passageiros: number 
+    imagens = string[]
+    categoria: number
+    isActive: number
+}
+
+user {
+    id: string
+    name: string
+    email: sting
+    senha: string
+    permition: number
+    isActive: number
+ }
+
+categoria {
+    id: string,
+    name: string
+    image: string
+    isActive: number
+}
+
+infos {
+    id: string
+    description: string
+    contact: string
+    photo1: string,
+    photo2: string
+}
+

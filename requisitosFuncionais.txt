@@ -1,0 +1,35 @@
+RF:
+-- user 
+- visualizar categorias
+- visualizar carros
+- pesquisar por carros pela: marca, modelo, ano, Versão
+- filtrar carros por: marca, modelo, versão, ano, quilometragem, combustível, cambio, Cor
+- ser redirecionado para whats da empresa
+
+-- admin master
+- adicionar categorias adicionar carros
+- editar carros
+- arquivar carros
+- adicionar demais admins
+- remover demais admins
+- editar informações de contato
+- editar informaçõesn de localização
+- editar descrição
+- desarquivar carros
+
+-- admin comum
+- adicionar categorias adicionar carros
+- editar carros
+- arquivar carros
+- adicionar demais admins
+- editar informações de contato
+- editar informaçõesn de localização
+- editar descrição
+- desarquivar carros
+
+RN:
+json com todas as marcas de carros conhecidos
+atualização em tempo real
+suportar mais de 500 users de uma vez
+adapatabilidade 
+ux intuitiva
