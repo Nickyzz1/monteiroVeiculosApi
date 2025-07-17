@@ -8,15 +8,22 @@ veículo  {
     Renavam: string 
     Chassi: string 
     Quilometragem: number
+    transmissão: (enum (manual. automática, ))
+    portas: number
     Tipo de combustível: enum (gasolina, alcool, disel, elétrico, híbrido)
-    Câmbio: enum (Manual, Automático, CVT)
     Categoria: enum(Hatch, Sedan, SUV, Picape, etc.)
     Cor: string
-    Número de portas: number
     Capacidade de passageiros: number 
+    piloto automatico: number
+    ar condicionado: number
+    computador de bordo: number
+    vidros eletricos: number
+    contrle remoto radio: number
+    porta copos: number
+    bancos com aquecimento: number
+    ajuste de altura:number
     imagens = string[]
-    categoria: number
-    isActive: number
+    isActive: number --> se não ativo colocar em arquivados e depois de 30 dias excluir
 }
 
 user {
@@ -32,7 +39,7 @@ categoria {
     id: string,
     name: string
     image: string
-    isActive: number
+    isActive: number --> se não ativo colocar em arquivados e depois de 30 dias excluir
 }
 
 infos {
@@ -41,5 +48,11 @@ infos {
     contact: string
     photo1: string,
     photo2: string
+}
+
+log{
+    id: string
+    description:string
+    date: date
 }
 
