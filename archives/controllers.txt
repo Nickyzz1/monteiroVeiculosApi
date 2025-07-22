@@ -1,0 +1,5 @@
+auth -> receber daddos da interface e verificar a existencia do usuário no banco, se existir ele vai para enviar email para o email na pesssoa para ele entrar com o código, se o código for correta ele vai gerar o token e a pessoa vai entrar
+o jwt é necessário em todas as páginas de admin, se nn tiver ele vai voltarr para a página de login
+gardar user no localstorege
+ao se deslogar ele vai tirar oo token e o user do local storege
+

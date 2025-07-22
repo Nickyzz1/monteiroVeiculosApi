@@ -1,0 +1,1 @@
+deixar categoria sem enum para poder sempre fazer mais categorias ou Excluir
