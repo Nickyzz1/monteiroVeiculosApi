@@ -9,10 +9,9 @@ import { CreateUserRequestDTO } from '../dto/userDto';
 export const CreateUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = req.body;
-     console.log(`bbbbbbbbbbbbbbbbbbbbb ${JSON.stringify(data, null, 2)}`)
     
     if(!data.Name || !data.Email) {
-      console.log(`aaaaaaaaaaaaaaaaaaaaaaaaa ${data.Name} ${data.Email}`)
+      
       return res.status(400).send('Argumentos faltantes')
     }
     const qtd = 6

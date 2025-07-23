@@ -1,8 +1,8 @@
 // / Para fazer login no POST /auth/login
 // REQUEST
 export interface AuthLoginRequestDTO {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
 }
 
 // RESPONSE

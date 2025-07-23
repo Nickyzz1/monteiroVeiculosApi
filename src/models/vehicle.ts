@@ -1,157 +1,196 @@
-// const { DataTypes } = require('sequelize');
-// const sequelize = require('../../config/db'); 
+const { DataTypes,  Model } = require('sequelize');
+import sequelize from "../config/database";
+import { ETransmision, ETraction, ESteering, EFuelType } from "../enums/enums";
 
-// const vehicle = sequelize.define('VehicleTb', {
-//     IDVehicle: {
-//         type: DataTypes.INTEGER,
-//         autoIncrement: true,
-//         allowNull: false,
-//         primaryKey: true
+class Vehicle extends Model {
+  IDVehicle!: number;
+  Brand!: string;
+  Model!: string;
+  Version!: string;
+  Year!: number;
+  Plate!: string;
+  Renavam!: string;
+  Chassi!: string;
+  Engine!: string;
+  Mileage!: number;
+  Transmission!: ETransmision;
+  HorsePower!: string;
+  Traction!: ETraction;
+  Steering!: ESteering;
+  Doors!: number;
+  FuelType!: EFuelType;
+  Category!: number;
+  Color!: string;
+  Capacity!: number;
+  CruiseControl!: number;
+  AirConditioning!: number;
+  OnBoardComputer!: number;
+  PowerWindows!: number;
+  RadioRemoteControl!: number;
+  CupHolders!: number;
+  HeighAdjustment!: number;
+  ReverseCamera!: number;
+  Airbags!: number;
+  Images!: string[];
+  IsActive!: number;
+}
 
-//     }, Brand: {
-//         type: DataTypes.STRING,
-//         allowNull: false
 
-//     }, Model: {
-//         type: DataTypes.STRING,
-//         allowNull: false
+Vehicle.init({
+    IDVehicle: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
 
-//     }, Version: {
-//         type: DataTypes.STRING,
-//         allowNull: false
+    }, Brand: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, Year: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
+    }, Model: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, Plate: {
-//         type: DataTypes.STRING,
-//         allowNull: false
+    }, Version: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, Renavam: {
-//         type: DataTypes.STRING,
-//         allowNull: true
+    }, Year: {
+        type: DataTypes.INTEGER,
+        allowNull: false
 
-//     }, Chassi: {
-//         type: DataTypes.STRING,
-//         allowNull: true
+    }, Plate: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, Engine: {
-//         type: DataTypes.STRING,
-//         allowNull: false
+    }, Renavam: {
+        type: DataTypes.STRING,
+        allowNull: true
 
-//     }, Mileage: {
-//         type: DataTypes.FLOAT,
-//         allowNull: false
+    }, Chassi: {
+        type: DataTypes.STRING,
+        allowNull: true
 
-//     }, Transmission: {
-//         type: DataTypes.ENUM(
-//         'manual',
-//         'automático',
-//         'automatizado',
-//         'cvt',
-//         'dct',
-//         'sequencial',
-//         'planetário',
-//         'hidrostático',
-//         'elétrico',
-//         'outro'
-//         ),
-//         allowNull: false
+    }, Engine: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, HorsePower: {
-//         type: DataTypes.STRING,
-//         allowNull: true
+    }, Mileage: {
+        type: DataTypes.FLOAT,
+        allowNull: false
 
-//     }, Traction: {
-//         type: DataTypes.ENUM(
-//             'Dianteira',
-//             'Traseira',
-//             '4x4'
-//         ),
-//         allowNull: true
+    }, Transmission: {
+        type: DataTypes.ENUM(
+        'manual',
+        'automático',
+        'automatizado',
+        'cvt',
+        'dct',
+        'sequencial',
+        'planetário',
+        'hidrostático',
+        'elétrico',
+        'outro'
+        ),
+        allowNull: false
 
-//     }, Steering: {
-//         type: DataTypes.ENUM('Hidráulica', 'Elétrica', 'Mecânica'),
-//         allowNull: true
-//     }, Doors: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
+    }, HorsePower: {
+        type: DataTypes.STRING,
+        allowNull: true
 
-//     }, FuelType: {
-//         type: DataTypes.ENUM(
-//         'gasoline',
-//         'ethanol',
-//         'flex',
-//         'diesel',
-//         'electric',
-//         'hybrid',
-//         'other'
-//     ),
-//         allowNull: false
+    }, Traction: {
+        type: DataTypes.ENUM(
+            'Dianteira',
+            'Traseira',
+            '4x4'
+        ),
+        allowNull: true
 
-//     }, Category: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false,
-//         references: {
-//         model: 'categoryTb',  
-//         key: 'IDCategory'             
-//     },
-//         onUpdate: 'CASCADE',
-//         onDelete: 'RESTRICT'
+    }, Steering: {
+        type: DataTypes.ENUM('Hidráulica', 'Elétrica', 'Mecânica'),
+        allowNull: true
+    }, Doors: {
+        type: DataTypes.INTEGER,
+        allowNull: false
 
-//     }, Color: {
-//         type: DataTypes.STRING,
-//         allowNull: false
+    }, FuelType: {
+        type: DataTypes.ENUM(
+        'gasoline',
+        'ethanol',
+        'flex',
+        'diesel',
+        'electric',
+        'hybrid',
+        'other'
+    ),
+        allowNull: false
 
-//     }, Capacity: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
+    }, Category: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+        model: 'categoryTb',  
+        key: 'IDCategory'             
+    },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
 
-//     }, CruiseControl: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, Color: {
+        type: DataTypes.STRING,
+        allowNull: false
 
-//     }, AirConditioning: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, Capacity: {
+        type: DataTypes.INTEGER,
+        allowNull: false
 
-//     }, OnBoardComputer: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, CruiseControl: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, PowerWindows: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, AirConditioning: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, RadioRemoteControl: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, OnBoardComputer: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, CupHolders: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, PowerWindows: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, HeighAdjustment: {
-//         type: DataTypes.INTEGER,
-//         allowNull: true
+    }, RadioRemoteControl: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     },ReverseCamera: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
+    }, CupHolders: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, Airbags: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
+    }, HeighAdjustment: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
-//     }, Images: {
-//         type: DataTypes.JSON,
-//         allowNull: true
+    },ReverseCamera: {
+        type: DataTypes.INTEGER,
+        allowNull: false
 
-//     }, IsActive: {
-//         type: DataTypes.INTEGER,
-//         allowNull: false
-//     },
-// });
+    }, Airbags: {
+        type: DataTypes.INTEGER,
+        allowNull: false
 
-// export default vehicle;
+    }, Images: {
+        type: DataTypes.JSON,
+        allowNull: true
+
+    }, IsActive: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+}, {
+  sequelize,
+  tableName: 'vehicleTb',
+  timestamps: true,
+});
+
+export default Vehicle;
