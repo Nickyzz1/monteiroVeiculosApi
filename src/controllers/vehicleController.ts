@@ -5,21 +5,17 @@ import { Op } from 'sequelize';
 
 export const createVehicle = async (req: Request, res: Response) => {
   try {
-    // Verifica se o corpo da requisição existe
     if (!req.body) {
       return res.status(400).send('Corpo da requisição ausente.');
     }
 
-    // Cria uma cópia segura dos dados
     const data: CreateVehicleDto = { ...req.body };
     console.log('Dados recebidos:', data);
 
-    // Verifica se os dados obrigatórios realmente estão presentes
     if (!data.Brand || !data.Model || !data.Year || !data.Plate || !data.Chassi || !data.Renavam) {
       return res.status(400).send('Campos obrigatórios ausentes.');
     }
 
-    // Verifica se já existe veículo com mesma placa, chassi ou renavam
     const vehicleExists = await Vehicle.findOne({
       where: {
         [Op.or]: [
@@ -34,7 +30,6 @@ export const createVehicle = async (req: Request, res: Response) => {
       return res.status(400).send('Placa, chassi ou renavam já cadastrados!');
     }
 
-    // Cria um novo veículo com todos os dados
     const newCar = await Vehicle.create({
       Brand: data.Brand,
       Model: data.Model,
@@ -74,11 +69,19 @@ export const createVehicle = async (req: Request, res: Response) => {
   }
 };
 
-
-export const getVehicles = async(req:Request, res: Response) => {
+export const getVehicles = async (req: Request, res: Response) => {
   const vehicles = await Vehicle.findAll();
   res.json(vehicles);
-}
+};
+
+export const GetVehicleById = async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params;
+  const vehicleExists = await Vehicle.findByPk(id);
+  if (!vehicleExists) {
+    return res.status(404).send("Veículo não encontrado");
+  }
+  return res.status(200).json(vehicleExists);
+};
 
 export const RemoveVehicle = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -99,33 +102,27 @@ export const RemoveVehicle = async (req: Request, res: Response, next: NextFunct
 };
 
 export const updateVehicle = async (req: Request, res: Response) => {
-    try {
-        const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-        // Busca o veículo pelo ID
-        const vehicle = await Vehicle.findByPk(id);
+    const vehicle = await Vehicle.findByPk(id);
 
-        // Se não encontrar, retorna 404
-        if (!vehicle) {
-            return res.status(404).send('Veículo não encontrado!');
-        }
-
-        // Atualiza somente os campos que foram enviados (e não são nulos ou undefined)
-        const updatedFields: any = {};
-        for (const key in req.body) {
-            if (req.body[key] !== null && req.body[key] !== undefined) {
-                updatedFields[key] = req.body[key];
-            }
-        }
-
-        await vehicle.update(updatedFields);
-
-        return res.status(200).send("veículo atualizado comn sucessso");
-    } catch (error) {
-        console.error('Erro ao atualizar veículo:', error);
-        return res.status(500).send('Erro ao atualizar');
+    if (!vehicle) {
+      return res.status(404).send('Veículo não encontrado!');
     }
+
+    const updatedFields: any = {};
+    for (const key in req.body) {
+      if (req.body[key] !== null && req.body[key] !== undefined) {
+        updatedFields[key] = req.body[key];
+      }
+    }
+
+    await vehicle.update(updatedFields);
+
+    return res.status(200).send("veículo atualizado com sucesso");
+  } catch (error) {
+    console.error('Erro ao atualizar veículo:', error);
+    return res.status(500).send('Erro ao atualizar');
+  }
 };
-
-
-
