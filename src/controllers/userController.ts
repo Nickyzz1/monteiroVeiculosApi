@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { createUser } from '../services/userService';
-import { randomInt } from 'crypto';
+import { createUser, getUser, getUserById, removeUser } from '../services/userService';
 import User from '../models/user';
-import { CreateUserRequestDTO } from '../dto/userDto';
+
 
 // Função para criar senha numérica aleatória
 function passGenerator(quantidade: number, min: number, max: number): string {
@@ -14,62 +13,46 @@ function passGenerator(quantidade: number, min: number, max: number): string {
 }
 
 // Cria um novo usuário
-export const CreateUser = async (req: Request, res: Response, next: NextFunction) => {
+export const CreateUser = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-
-    if (!data.Name || !data.Email) {
-      return res.status(400).send('Argumentos faltantes');
-    }
-
-    const senhaGerada = passGenerator(6, 0, 9);
-
-    const user = await createUser(data.Name, data.Email, senhaGerada);
-    return res.status(201).json(user);
+    const users = await createUser(data?.Name, data?.Email);
+    return res.status(201).json(users);
   } catch (err) {
-    next(err);
+        console.error("Erro ao criar usuário:", err);
+    return res.status(500).send("Internal server error")
   }
 };
 
 // Lista todos os usuários
-export const GetUser = async (req: Request, res: Response, next: NextFunction) => {
+export const GetUser = async (req: Request, res: Response) => {
   try {
-    const users = await User.findAll();
-    return res.status(200).json(users);
+    return res.status(200).json(await getUser());
   } catch (err) {
-    next(err);
+    console.error("Erro ao buscar usuários:", err);
+    return res.status(500).send("Internal server error")
   }
 };
 
 // Busca usuário por ID
-export const GetUserById = async (req: Request, res: Response, next: NextFunction) => {
+export const GetUserById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const userExists = await User.findByPk(id);
-
-    if (!userExists) {
-      return res.status(404).send("Usuário não encontrado");
-    }
-
-    return res.status(200).json(userExists);
-  } catch (err) {
-    next(err);
+      const data = await req.body;
+      const user = await getUserById(data);
+      return res.status(201).json(user);
+    } catch (err) {
+      console.error("Erro ao busscar usuário por ID:", err);
+      return res.status(500).send("Internal server error")
   }
 };
 
 // Remove usuário por ID
-export const RemoveUser = async (req: Request, res: Response, next: NextFunction) => {
+export const RemoveUser = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-    const user = await User.findByPk(id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'Usuário não encontrado' });
-    }
-
-    await user.destroy();
+    await removeUser(req)
     return res.status(200).json({ message: 'Usuário deletado com sucesso' });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    console.error("Erro ao deletar usuário:", err);
+    return res.status(500).send("Internal server error")
   }
 };

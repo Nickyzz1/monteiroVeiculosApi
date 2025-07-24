@@ -1,39 +1,70 @@
-// import  Vehicle from '../models/vehicle'
-// import { CreateVehicleDto } from '../dto/vehicleDto';
-// import { AppError } from '../error/AppError';
-// const { Op } = require('sequelize');
+import { CreateVehicleDto } from "../dto/vehicleDto"
+import { Request} from 'express';
+import Vehicle from "../models/vehicle";
 
-// export class vehicle {
+export const createVehicle = async (req: Request) => {
 
-//   public async createVehicle(data : CreateVehicleDto) {
-//     if(!data) {
-//       throw new AppError('Dados faltantes, por favor prencha todos os dados', 400);
-//     }
-   
-//   const existingCar = await Vehicle.findOne({ 
-//     where: {
-//       [Op.or]: [
-//         { renavam: data.Renavam }, 
-//         { chassi: data.Chassi }, 
-//         { plate: data.Plate } 
-//       ]
-//     }
-//   });
+    const data: CreateVehicleDto = { ...req.body };
+    const newVehicle = await Vehicle.create({
+      Brand: data.Brand,
+      Model: data.Model,
+      Version: data.Version,
+      Year: data.Year,
+      Plate: data.Plate,
+      Renavam: data.Renavam,
+      Chassi: data.Chassi,
+      Engine: data.Engine,
+      Mileage: data.Mileage,
+      Transmission: data.Transmission,
+      HorsePower: data.HorsePower,
+      Traction: data.Traction,
+      Steering: data.Steering,
+      Doors: data.Doors,
+      FuelType: data.FuelType,
+      Category: data.Category,
+      Color: data.Color,
+      Capacity: data.Capacity,
+      CruiseControl: data.CruiseControl,
+      AirConditioning: data.AirConditioning,
+      OnBoardComputer: data.OnBoardComputer,
+      PowerWindows: data.PowerWindows,
+      RadioRemoteControl: data.RadioRemoteControl,
+      CupHolders: data.CupHolders,
+      HeighAdjustment: data.HeighAdjustment,
+      ReverseCamera: data.ReverseCamera,
+      Airbags: data.Airbags,
+      Images: data.Images,
+      IsActive: data.IsActive,
+    });
 
-//   if (existingCar) {
-//     throw new AppError('Chassi, renavam ou placa já cadastrada.', 409);
-//   }
+    return newVehicle
+};
 
-//     // return await Vehicle.create(data);
-//   }
-  
-//   public async getVehicles() {
-//     return await Vehicle.findAll();
-//   }
-  
-//   public async updateVehicle(id : number, data: any) {
-//     const vehicle = await Vehicle.findByPk(id);
-//     if (!vehicle) return null;
-//     return await vehicle.update(data);
-//   }
-// }
+export const getVehicles = async () => {
+  return await Vehicle.findAll();
+};
+
+export const getVehicleById = async (req: Request) => {
+  const { id } = await req.params;
+  const vehicleExists = await Vehicle.findByPk(id);
+  return vehicleExists
+};
+
+export const removeVehicle = async (req: Request) => {
+    const { id } = await req.params;
+    const vehicle = await Vehicle.findByPk(id);
+    await vehicle.destroy();
+};
+
+export const updateVehicle = async (req: Request) => {
+
+    const { id } = req.params;
+    const vehicle = await Vehicle.findByPk(id);
+    const updatedFields: any = {};
+    for (const key in req.body) {
+      if (req.body[key] !== null && req.body[key] !== undefined) {
+        updatedFields[key] = req.body[key];
+      }
+    }
+    await vehicle.update(updatedFields);
+};
