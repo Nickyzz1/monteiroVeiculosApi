@@ -30,11 +30,13 @@ export const vehicleCreateMiddleware = async (req: Request, res: Response, next:
 }
 
 export const vehicleByIdMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { id } = req.params;
+    const id = req.params.id;
     const vehicleExists = await Vehicle.findByPk(id);
     if (!vehicleExists) {
         res.status(404).send("Veículo não encontrado");
         return
     }
+
+    return next()
 
 }

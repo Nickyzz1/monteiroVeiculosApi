@@ -4,7 +4,7 @@ import { createVehicle, getVehicleById, getVehicles, removeVehicle, updateVehicl
 
 export const CreateVehicle = async (req: Request, res: Response) => {
   try {
-    const newVehicle = await createVehicle(req.body)
+    const newVehicle = await createVehicle(req)
     return res.status(201).json(newVehicle);
   } catch (err) {
     console.error('Erro ao criar veículo:', err);

@@ -11,6 +11,11 @@ export const userCreateMidware = async (req: Request, res: Response, next: NextF
             return
         }
 
+        if(await User.findOne({where : {Email: data.Email}})) {
+            res.status(400).send('Usuário já existe');
+            return
+        }
+
         return next(); 
     } catch (error) {
         next(error); 
@@ -18,7 +23,12 @@ export const userCreateMidware = async (req: Request, res: Response, next: NextF
 };
 
 export const userByIdMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { id } = req.params;
+    const id = req.params.id;
+    if(!id){
+        console.log(id)
+        res.status(400).send('o ID é nulo')
+        return
+    }
     const userExists = await User.findByPk(id);
 
     if (!userExists) {

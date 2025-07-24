@@ -28,8 +28,8 @@ export const getUser = async() => {
 
 export const getUserById = async (req: Request) => {
 
-  const { id } = req.params;
-  const user = User.findByPk(id)
+  const id = await req.params.id;
+  const user = await User.findByPk(id)
   return user;
 
 };
@@ -37,7 +37,7 @@ export const getUserById = async (req: Request) => {
 
 export const removeUser = async (req: Request) => {
 
-  const { id } = req.params;
+  const id = await req.params.id;
   const user = await User.findByPk(id);
   await user?.destroy();
 };

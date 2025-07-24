@@ -21,14 +21,14 @@ export const getCategories = async () => {
 
 export const getCategoryById = async (req: Request) => {
 
-    const { id } = req.params;
+    const id = req.params.id;
     const category = await Category.findByPk(id);
     return category
 };
 
 export const updateCategory = async (req: Request) => {
 
-    const { id } = req.params;
+    const id = req.params.id;
     const category = await Category.findByPk(id);
 
     const updatedFields: any = {};
@@ -42,7 +42,7 @@ export const updateCategory = async (req: Request) => {
 
 export const removeCategory = async (req: Request) => {
 
-    const { id } = req.params;
+    const id = req.params.id;
     const category = await Category.findByPk(id);
     await category?.destroy();
 };

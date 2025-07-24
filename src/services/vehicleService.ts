@@ -45,20 +45,20 @@ export const getVehicles = async () => {
 };
 
 export const getVehicleById = async (req: Request) => {
-  const { id } = await req.params;
+  const id = await req.params.id;
   const vehicleExists = await Vehicle.findByPk(id);
   return vehicleExists
 };
 
 export const removeVehicle = async (req: Request) => {
-    const { id } = await req.params;
+    const id = await req.params.id;
     const vehicle = await Vehicle.findByPk(id);
     await vehicle.destroy();
 };
 
 export const updateVehicle = async (req: Request) => {
 
-    const { id } = req.params;
+    const id = req.params.id;
     const vehicle = await Vehicle.findByPk(id);
     const updatedFields: any = {};
     for (const key in req.body) {

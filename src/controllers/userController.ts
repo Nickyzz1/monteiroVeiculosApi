@@ -37,8 +37,7 @@ export const GetUser = async (req: Request, res: Response) => {
 // Busca usuário por ID
 export const GetUserById = async (req: Request, res: Response) => {
   try {
-      const data = await req.body;
-      const user = await getUserById(data);
+      const user = await getUserById(req);
       return res.status(201).json(user);
     } catch (err) {
       console.error("Erro ao busscar usuário por ID:", err);

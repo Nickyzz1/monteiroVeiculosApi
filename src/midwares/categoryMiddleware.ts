@@ -22,7 +22,7 @@ export const createCategoryMiddleware = async (req: Request, res: Response, next
 
 export const createByIdMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 
-    const { id } = req.params;
+    const id = req.params.id;
     const category = await Category.findByPk(id);
 
     if (!category) {
