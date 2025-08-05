@@ -5,7 +5,7 @@ import  cors  from 'cors';
 const app = express();
 app.use(cors({
   origin: 'http://localhost:3000', // ou '*' se quiser liberar tudo (apenas em dev)
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', "PATCH", 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json());

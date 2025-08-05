@@ -1,48 +1,61 @@
 import Category from "../models/category";
-import { Request, Response } from "express";
+import { Request } from "express";
 import { ICategory } from "../dto/categoryDto";
+import deleteImage from '../services/cloudinaryService'
 
 export const createCategory = async (req: Request) => {
-
-    const data: ICategory = req.body;
-    const newCategory = await Category.create({
-      Title: data?.Title,
-      Image: data?.Image || null,
-      IsActive: 1
-    });
-    return newCategory;
+  const data: ICategory = req.body;
+  const newCategory = await Category.create({
+    Title: data?.Title,
+    Image: data?.Image || null,
+    IsActive: 1,
+  });
+  return newCategory;
 };
 
 export const getCategories = async () => {
-
-    const categories = await Category.findAll();
-    return categories
+  return await Category.findAll();
 };
 
 export const getCategoryById = async (req: Request) => {
-
-    const id = req.params.id;
-    const category = await Category.findByPk(id);
-    return category
+  const id = req.params.id;
+  return await Category.findByPk(id);
 };
 
 export const updateCategory = async (req: Request) => {
+  const id = req.params.id;
+  const category = await Category.findByPk(id);
+  if (!category) throw new Error("Categoria não encontrada");
 
-    const id = req.params.id;
-    const category = await Category.findByPk(id);
-
-    const updatedFields: any = {};
-    for (const key in req.body) {
-        if (req.body[key] !== null && req.body[key] !== undefined) {
-            updatedFields[key] = req.body[key];
-        }
+  const updatedFields: Partial<ICategory> = {};
+  for (const key in req.body) {
+    const typedKey = key as keyof ICategory; // <-- aqui o type assertion
+    if (req.body[typedKey] !== null && req.body[typedKey] !== undefined) {
+      updatedFields[typedKey] = req.body[typedKey];
     }
-    await category?.update(updatedFields);
+  }
+  await category.update(updatedFields);
+  return category;
 };
 
 export const removeCategory = async (req: Request) => {
+  const id = req.params.id;
+  const category = await Category.findByPk(id);
+  if (!category) throw new Error("Categoria não encontrada");
+  await category.destroy();
+  return true;
+};
 
-    const id = req.params.id;
-    const category = await Category.findByPk(id);
-    await category?.destroy();
+/**
+ * Serviço para deletar imagem no Cloudinary, apenas retorna true/false
+ */
+export const removeImage = async (publicId: string): Promise<boolean> => {
+  if (!publicId) return false;
+  try {
+    const result : any = await deleteImage(publicId);
+    return result.result === "ok";
+  } catch (error) {
+    console.error("Erro ao deletar imagem no Cloudinary:", error);
+    return false;
+  }
 };
