@@ -1,6 +1,7 @@
-const { DataTypes,  Model } = require('sequelize');
+import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
 import { ETransmision, ETraction, ESteering, EFuelType } from "../enums/enums";
+import Category from "./category";
 
 class Vehicle extends Model {
   IDVehicle!: number;
@@ -31,6 +32,7 @@ class Vehicle extends Model {
   HeighAdjustment!: number;
   ReverseCamera!: number;
   Airbags!: number;
+  Alarm!: number;
   Images!: string[];
   IsActive!: number;
 }
@@ -53,7 +55,7 @@ Vehicle.init({
 
     }, Version: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
 
     }, Year: {
         type: DataTypes.INTEGER,
@@ -115,13 +117,14 @@ Vehicle.init({
 
     }, FuelType: {
         type: DataTypes.ENUM(
-        'gasoline',
-        'ethanol',
-        'flex',
-        'diesel',
-        'electric',
-        'hybrid',
-        'other'
+      'Gasolina',
+      'Etanol',
+      'flex',
+      'Diesel',
+      'Elétrico',
+      'Gás',
+      'Híbrido',
+      'Outro'
     ),
         allowNull: false
 
@@ -129,19 +132,19 @@ Vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-        model: 'categoryTb',  
-        key: 'IDCategory'             
-    },
+            model: 'categoryTb',
+            key: 'IDCategory'
+  },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
 
     }, Color: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
 
     }, Capacity: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
 
     }, CruiseControl: {
         type: DataTypes.INTEGER,
@@ -167,17 +170,25 @@ Vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: true
 
+    }, Alarm: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+
     }, HeighAdjustment: {
         type: DataTypes.INTEGER,
         allowNull: true
 
     },ReverseCamera: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
 
     }, Airbags: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
+
+    }, Description: {
+        type: DataTypes.INTEGER,
+        allowNull: true
 
     }, Images: {
         type: DataTypes.JSON,
@@ -191,6 +202,17 @@ Vehicle.init({
   sequelize,
   tableName: 'vehicleTb',
   timestamps: true,
+});
+
+Vehicle.belongsTo(Category, {
+  foreignKey: 'Category',
+  as: 'category',  // nome diferente da coluna
+  onDelete: 'CASCADE',
+  onUpdate: 'CASCADE',
+});
+
+Category.hasMany(Vehicle, {
+  foreignKey: 'Category', // tem que ser igual ao que está na tabela Vehicle
 });
 
 export default Vehicle;

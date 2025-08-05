@@ -53,6 +53,9 @@ export const getVehicleById = async (req: Request) => {
 export const removeVehicle = async (req: Request) => {
     const id = await req.params.id;
     const vehicle = await Vehicle.findByPk(id);
+    if(!vehicle){
+      return new Error("Veículo não encontrado ")
+    }
     await vehicle.destroy();
 };
 
@@ -66,5 +69,9 @@ export const updateVehicle = async (req: Request) => {
         updatedFields[key] = req.body[key];
       }
     }
+    if (!vehicle) {
+      return new Error("Veículo não encontrado");
+    }
+
     await vehicle.update(updatedFields);
 };

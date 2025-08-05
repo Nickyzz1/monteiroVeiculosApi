@@ -33,4 +33,5 @@ Category.init({
     timestamps: true
 });
 
+
 export default Category;

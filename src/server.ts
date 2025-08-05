@@ -1,5 +1,5 @@
 import app from './App';
-import  sequelize from './config/database';
+import sequelize from './config/database';
 
 const PORT = 8080;
 
@@ -7,7 +7,10 @@ const PORT = 8080;
   try {
     await sequelize.authenticate();
     console.log('Conexão com o banco estabelecida com sucesso.');
-    await sequelize.sync(); // Cria as tabelas se não existirem
+
+    // auto-update do banco sem apagar registros
+    await sequelize.sync({ force: true }); 
+
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });

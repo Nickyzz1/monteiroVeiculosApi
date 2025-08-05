@@ -7,6 +7,7 @@ import { userCreateMidware, userByIdMiddleware } from '../midwares/userMiddlewar
 import { vehicleCreateMiddleware, vehicleByIdMiddleware } from '../midwares/vehicleMiddleware';
 import { createCategoryMiddleware, createByIdMiddleware } from '../midwares/categoryMiddleware';
 import { authMiddleware } from '../midwares/authMiddleware';
+import uploadRouter from './uploadRouter';
 
 const router = Router();
 
@@ -29,6 +30,8 @@ router.get('/api/v1/category', GetCategories)
 router.get('/api/v1/category/:id', createByIdMiddleware, GetCategoryById)
 router.delete('/api/v1/category/:id', createByIdMiddleware,  RemoveCategory)
 router.patch('/api/v1/category/:id',createByIdMiddleware, UpdateCategory)
+
+router.use('/api/v1/upload', uploadRouter);
 
 
 export default router;

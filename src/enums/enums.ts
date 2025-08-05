@@ -24,11 +24,12 @@ export enum ESteering {
 }
 
 export enum EFuelType {
-    'gasoline',
-    'ethanol',
+    'Gasolina',
+    'Etanol',
     'flex',
-    'diesel',
-    'electric',
-    'hybrid',
-    'other'
+    'Diesel',
+    'Elétrico',
+    'Gás',
+    'Híbrido',
+    'Outro'
 }
