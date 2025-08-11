@@ -1,6 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
-import { ETransmision, ETraction, ESteering, EFuelType } from "../enums/enums";
+import { ETransmision, ETraction, ESteering, EFuelType, EBrand } from "../enums/enums";
 import Category from "./category";
 
 class Vehicle extends Model {
@@ -28,6 +28,7 @@ class Vehicle extends Model {
   OnBoardComputer!: number;
   PowerWindows!: number;
   RadioRemoteControl!: number;
+  Radio!: number;
   CupHolders!: number;
   HeighAdjustment!: number;
   ReverseCamera!: number;
@@ -46,7 +47,7 @@ Vehicle.init({
         primaryKey: true
 
     }, Brand: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM(...Object.values(EBrand)),
         allowNull: false
 
     }, Model: {
@@ -82,18 +83,7 @@ Vehicle.init({
         allowNull: false
 
     }, Transmission: {
-        type: DataTypes.ENUM(
-        'manual',
-        'automático',
-        'automatizado',
-        'cvt',
-        'dct',
-        'sequencial',
-        'planetário',
-        'hidrostático',
-        'elétrico',
-        'outro'
-        ),
+        type: DataTypes.ENUM(...Object.values(ETransmision)),
         allowNull: false
 
     }, HorsePower: {
@@ -109,23 +99,14 @@ Vehicle.init({
         allowNull: true
 
     }, Steering: {
-        type: DataTypes.ENUM('Hidráulica', 'Elétrica', 'Mecânica'),
+        type: DataTypes.ENUM(...Object.values(ESteering)),
         allowNull: true
     }, Doors: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
 
     }, FuelType: {
-        type: DataTypes.ENUM(
-      'Gasolina',
-      'Etanol',
-      'flex',
-      'Diesel',
-      'Elétrico',
-      'Gás',
-      'Híbrido',
-      'Outro'
-    ),
+        type: DataTypes.ENUM(...Object.values(EFuelType)),
         allowNull: false
 
     }, Category: {
@@ -182,7 +163,11 @@ Vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: true
 
-    }, Airbags: {
+    }, Radio: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    Airbags: {
         type: DataTypes.INTEGER,
         allowNull: true
 
@@ -206,7 +191,7 @@ Vehicle.init({
 
 Vehicle.belongsTo(Category, {
   foreignKey: 'Category',
-  as: 'category',  // nome diferente da coluna
+  as: 'category',  //nome col
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 });
