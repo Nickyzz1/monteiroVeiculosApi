@@ -179,6 +179,9 @@ Vehicle.init({
         type: DataTypes.JSON,
         allowNull: true
 
+    }, clicks: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }, IsActive: {
         type: DataTypes.INTEGER,
         allowNull: false
