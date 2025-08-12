@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../config/db'); 
+import { DataTypes, Model } from 'sequelize';
+import sequelize from "../config/database"
 
 const log = sequelize.define('logTb', {
     IDLog: {
