@@ -10,7 +10,7 @@ import { authMiddleware } from '../midwares/authMiddleware';
 import { RemoveImage } from '../controllers/categoryController';
 import uploadRouter from './uploadRouter';
 import { EBrand, EConfort, EFuelType, ESteering, ETraction, ETransmision } from '../enums/enums';
-import { createLog } from '../controllers/logController';
+import { createLog, getAll } from '../controllers/logController';
 import { infoController } from '../controllers/infoController';
 
 const router = Router();
@@ -36,10 +36,11 @@ router.delete('/api/v1/category/:id', createByIdMiddleware,  RemoveCategory)
 router.patch('/api/v1/category/:id',createByIdMiddleware, UpdateCategory)
 router.delete('/api/v1/category/image', RemoveImage);
 
-router.post('/', createLog);
+router.post('/api/v1/log', createLog);
+router.get('/api/v1/log', getAll);
 
-router.get('/', infoController.infoGetAll)
-router.put('/', infoController.infoPut)
+router.get('/api/v1/info', infoController.infoGetAll)
+router.put('/api/v1/info/:id', infoController.infoPut)
 
 router.get('/api/v1/enums', (req, res) => {
   res.json({

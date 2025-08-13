@@ -1,142 +1,52 @@
-const dbConnection = require('../../config/db.ts');
-const VehicleVar = require('../models/vehicle')
-
-const vehicles = [
-  {
-    Brand: 'Jeep',
-    Model: 'Commander',
-    Version: '2.0 TD380 Turbo Diesel Overland AT9',
-    Year: 2022,
-    Plate: 'XXX6',
-    Renavam: null,
-    Chassi: null,
-    Engine: '2.0 TD380',
-    Mileage: 53206,
-    Transmission: 'automático',
-    HorsePower: null,
-    Traction: '4x4',
-    Steering: null,
-    Doors: 4,
-    FuelType: 'diesel',
-    Category: 4,
-    Color: 'cinza',
-    Capacity: 5,
-    CruiseControl: 1,
-    AirConditioning: 1,
-    OnBoardComputer: 1,
-    PowerWindows: 1,
-    RadioRemoteControl: 0,
-    CupHolders: 1,
-    HeighAdjustment: 1,
-    ReverseCamera: 1,
-    Airbags: 1,
-    Images: [],
-    IsActive: 1
-  },
-  {
-    Brand: 'Toyota',
-    Model: 'Corolla',
-    Version: '2.0 VVT-IE FLEX GR-S DIRECT SHIFT',
-    Year: 2025,
-    Plate: 'XXX7',
-    Renavam: null,
-    Chassi: null,
-    Engine: '2.0 VVT-IE',
-    Mileage: 1920,
-    Transmission: 'automático',
-    HorsePower: null,
-    Traction: null,
-    Steering: null,
-    Doors: 4,
-    FuelType: 'flex',
-    Category: 2,
-    Color: 'branco',
-    Capacity: 5,
-    CruiseControl: 1,
-    AirConditioning: 1,
-    OnBoardComputer: 1,
-    PowerWindows: 1,
-    RadioRemoteControl: 0,
-    CupHolders: 1,
-    HeighAdjustment: 1,
-    ReverseCamera: 1,
-    Airbags: 1,
-    Images: [],
-    IsActive: 1
-  },
-  {
-    Brand: 'Toyota',
-    Model: 'Hilux',
-    Version: '2.8 D-4D TURBO DIESEL CD SRX LIMITED 4X4 AUTOMÁTICO',
-    Year: 2023,
-    Plate: 'XXX0',
-    Renavam: null,
-    Chassi: null,
-    Engine: '2.8 D-4D',
-    Mileage: 18000,
-    Transmission: 'automático',
-    HorsePower: null,
-    Traction: '4x4',
-    Steering: null,
-    Doors: 4,
-    FuelType: 'diesel',
-    Category: 5,
-    Color: 'branco',
-    Capacity: 5,
-    CruiseControl: 1,
-    AirConditioning: 1,
-    OnBoardComputer: 1,
-    PowerWindows: 1,
-    RadioRemoteControl: 0,
-    CupHolders: 1,
-    HeighAdjustment: 1,
-    ReverseCamera: 1,
-    Airbags: 1,
-    Images: [],
-    IsActive: 1
-  },
-  {
-    Brand: 'Volkswagen',
-    Model: 'Fox',
-    Version: '1.6 MSI TOTAL FLEX CONNECT 4P MANUAL',
-    Year: 2018,
-    Plate: 'XXX8',
-    Renavam: null,
-    Chassi: null,
-    Engine: '1.6 MSI',
-    Mileage: 46000,
-    Transmission: 'manual',
-    HorsePower: null,
-    Traction: null,
-    Steering: null,
-    Doors: 4,
-    FuelType: 'flex',
-    Category: 3,
-    Color: 'vermelho',
-    Capacity: 5,
-    CruiseControl: 0,
-    AirConditioning: 1,
-    OnBoardComputer: 0,
-    PowerWindows: 1,
-    RadioRemoteControl: 0,
-    CupHolders: 1,
-    HeighAdjustment: 1,
-    ReverseCamera: 0,
-    Airbags: 1,
-    Images: [],
-    IsActive: 1
-  }
-];
+import sequelize from '../config/database'; // aqui importa o Sequelize que você mostrou
+import Info from '../models/infos';
 
 async function seed() {
   try {
-    await dbConnection.sync();
-    await VehicleVar.bulkCreate(vehicles);
-    console.log('Veículos inseridos com sucesso!');
+    console.log('🔄 Conectando ao banco...');
+    await sequelize.authenticate();
+
+    console.log('📦 Criando tabelas (se não existirem)...');
+    await sequelize.sync();
+    
+    console.log('ℹ️ Inserindo infos...');
+    await Info.create({
+    "CNPJ": "12.345.678/0001-90",
+    "Contact": "contato@empresa.com",
+    "Logo": "https://meusite.com/logo.png",
+    "volkswagen": 0,
+    "chevrolet": 0,
+    "fiat": 0,
+    "ford": 0,
+    "toyota": 0,
+    "honda": 0,
+    "hyundai": 0,
+    "renault": 0,
+    "peugeot": 0,
+    "citroen": 0,
+    "nissan": 0,
+    "jeep": 0,
+    "kia": 0,
+    "mitsubishi": 0,
+    "mercedes_benz": 0,
+    "bmw": 0,
+    "audi": 0,
+    "volvo": 0,
+    "land_rover": 0,
+    "jac": 0,
+    "jaguar": 0,
+    "lexus": 0,
+    "chery": 0,
+    "byd": 0,
+    "outro": 0
+    });
+
+    console.log('✅ Seed finalizado com sucesso!');
   } catch (error) {
-    console.error('Erro ao inserir veículos:', error);
+    console.error('❌ Erro ao rodar seed:', error);
   } finally {
-    await dbConnection.close();
+    await sequelize.close();
+    console.log('🔌 Conexão fechada.');
   }
 }
 

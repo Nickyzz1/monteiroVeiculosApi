@@ -7,4 +7,8 @@ export class LogService {
     return await Log.create(data);
   }
 
+  static async getAll() {
+    return await Log.findAll();
+  }
+
 }

@@ -8,21 +8,17 @@ const Info = sequelize.define('infoTb', {
         allowNull: false,
         primaryKey: true
     },
-    Description:{
+    CNPJ:{
         type: DataTypes.STRING,
         allowNull: true
     },
-    CNPJ:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     Contact: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     Logo: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
 
     volkswagen: {

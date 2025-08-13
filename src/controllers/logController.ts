@@ -17,3 +17,12 @@ export const createLog = async (req: Request, res: Response) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const getAll = async (req: Request, res: Response) => {
+  try {
+    const log = await LogService.getAll();
+    res.json(log);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
