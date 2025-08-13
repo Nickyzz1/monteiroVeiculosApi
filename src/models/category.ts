@@ -1,37 +1,37 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from "../config/database"
+import sequelize from "../config/database";
 
 class Category extends Model {
-    IDCatgeory!: number
-    Title!:string
-    Image!:string
-    IsActive!:number
+  IDCategory!: number;
+  Title!: string;
+  Image!: string | null;
+  IsActive!: boolean;
 }
-Category.init({
-    IDCategory: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    Title:{
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    Image: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    IsActive: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    }
-}, {
-    sequelize,
-    tableName: 'categoryTb', 
-    timestamps: true
-});
 
+Category.init({
+  IDCategory: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  Title:{
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  Image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  IsActive: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  },
+}, {
+  sequelize,
+  tableName: 'categoryTb',
+  timestamps: true,
+});
 
 export default Category;

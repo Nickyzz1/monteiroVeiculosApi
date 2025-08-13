@@ -6,12 +6,12 @@ class User extends Model {
   Name!: string;
   Email!: string;
   Password!: string;
-  IsAdmin!: number;
+  IsAdmin!: boolean;
 }
 
 User.init({
   IDUser: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
@@ -22,16 +22,15 @@ User.init({
   Email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
   Password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   IsAdmin: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: false,
   }
 }, {
   sequelize,
