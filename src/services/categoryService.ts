@@ -2,6 +2,7 @@ import Category from "../models/category";
 import { Request } from "express";
 import { ICategory } from "../dto/categoryDto";
 import deleteImage from '../services/cloudinaryService'
+import { LogService } from "./logService";
 
 export const createCategory = async (req: Request) => {
   const data: ICategory = req.body;
@@ -10,8 +11,12 @@ export const createCategory = async (req: Request) => {
     Image: data?.Image || null,
     IsActive: 1,
   });
-  return newCategory;
-};
+  LogService.createLog({
+    Description: `Nova categoria ${newCategory.get('Title')} inserida`,
+    Date: new Date()
+  });
+    return newCategory;
+  };
 
 export const getCategories = async () => {
   return await Category.findAll();
@@ -35,6 +40,11 @@ export const updateCategory = async (req: Request) => {
     }
   }
   await category.update(updatedFields);
+  LogService.createLog({
+  Description: `Categoria ${category.get('Title')} editada`,
+  Date: new Date()
+  });
+
   return category;
 };
 
@@ -43,6 +53,11 @@ export const removeCategory = async (req: Request) => {
   const category = await Category.findByPk(id);
   if (!category) throw new Error("Categoria não encontrada");
   await category.destroy();
+  LogService.createLog({
+  Description: `Categoria ${category.get('Title')} excluída`,
+  Date: new Date()
+  });
+
   return true;
 };
 
