@@ -26,4 +26,17 @@ export class InfoService {
     await info.update(data);
     return info;
   }
+
+  static async incrementBrand(id: number, brand: string) {
+    const info = await Info.findByPk(id);
+    if (!info) throw new Error('Registro não encontrado');
+
+    const currentValue = (info.get(brand) as number) || 0;
+    await info.update({ [brand]: currentValue + 1 });
+
+    return info;
+  }
+
+
+
 }

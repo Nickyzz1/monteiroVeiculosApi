@@ -39,8 +39,12 @@ router.delete('/api/v1/category/image', RemoveImage);
 router.post('/api/v1/log', createLog);
 router.get('/api/v1/log', getAll);
 
-router.get('/api/v1/info', infoController.infoGetAll)
+router.get('/api/v1/info/:id', infoController.infoGet)
 router.put('/api/v1/info/:id', infoController.infoPut)
+router.put('/api/v1/incrementBrand/:id', infoController.infoIncrementBrand)
+
+router.post('/api/v1/info', infoController.infoCreate)
+
 
 router.get('/api/v1/enums', (req, res) => {
   res.json({
