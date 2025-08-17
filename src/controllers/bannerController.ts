@@ -12,18 +12,17 @@ export const getBanners = async (req: Request, res: Response) => {
 
 export const addBanner = async (req: Request, res: Response) => {
   try {
-    const { Image, Order } = req.body;
+    const { Image, Order, Type, Local } = req.body;
 
     if (!Image) return res.status(400).json({ error: "URL da imagem é obrigatória" });
 
-    const newBanner = await bannerService.createBanner(Image, Order);
+    const newBanner = await bannerService.createBanner(Image, Order, Type, Local);
     res.status(201).json(newBanner);
 
   } catch (error: any) {
     res.status(500).json({ error: error.message || "Erro ao criar banner" });
   }
 };
-
 
 export const removeBanner = async (req: Request, res: Response) => {
   try {

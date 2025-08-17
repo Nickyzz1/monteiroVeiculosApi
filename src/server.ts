@@ -9,7 +9,7 @@ const PORT = 8080;
     console.log('Conexão com o banco estabelecida com sucesso.');
 
     // auto-update do banco sem apagar registros
-    // await sequelize.sync({ force: true }); 
+    await sequelize.sync({ force: true }); 
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
     });

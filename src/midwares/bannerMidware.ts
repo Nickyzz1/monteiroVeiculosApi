@@ -3,15 +3,24 @@ import Banner from '../models/banner';
 
 export const checkOrderUnique = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { Image, Order } = req.body;
-    const { id } = req.params; // pega o id do banner que está sendo editado
-    if (Order === undefined) return res.status(400).json({ message: 'Order é obrigatório' });
+    const { Order, Local } = req.body;
+    const { id } = req.params; // usado na edição
 
-    const existing = await Banner.findOne({ where: { Order: Order } });
+    if (Order === undefined || Local === undefined) {
+      return res.status(400).json({ message: 'Order e Local são obrigatórios' });
+    }
 
-    // Se existe outro banner com essa ordem, bloqueia
-    if (existing && existing.IDBanner !== Number(id)) {
-      return res.status(400).json({ message: `Já existe um banner com a ordem ${Order}` });
+    // Busca se já existe outro banner com mesma ordem **na mesma página**
+    const existing = await Banner.findOne({ 
+      where: { 
+        Order: Order, 
+        Local: Local 
+      } 
+    });
+
+    // Bloqueia se encontrar outro banner com a mesma ordem e for diferente do que está sendo editado
+    if (existing && (!id || existing.IDBanner !== Number(id))) {
+      return res.status(400).json({ message: `Já existe um banner com a ordem ${Order} nesta página` });
     }
 
     next();
