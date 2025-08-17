@@ -3,6 +3,7 @@ import { Request } from "express";
 import { ICategory } from "../dto/categoryDto";
 import deleteImage from '../services/cloudinaryService'
 import { LogService } from "./logService";
+import Vehicle from "../models/vehicle";
 
 export const createCategory = async (req: Request) => {
   const data: ICategory = req.body;
@@ -51,7 +52,14 @@ export const updateCategory = async (req: Request) => {
 export const removeCategory = async (req: Request) => {
   const id = req.params.id;
   const category = await Category.findByPk(id);
+    await Vehicle.destroy({
+    where: { Category: id }
+  });
+
   if (!category) throw new Error("Categoria não encontrada");
+  await Vehicle.destroy({
+    where: { Category: id }
+  });
   await category.destroy();
   LogService.createLog({
   Description: `Categoria ${category.get('Title')} excluída`,

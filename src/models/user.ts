@@ -1,5 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
-import sequelize from "../config/database"
+import sequelize from "../config/database";
 
 class User extends Model {
   IDUser!: number;
@@ -13,25 +13,13 @@ User.init({
   IDUser: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
+    allowNull: false,
     primaryKey: true,
   },
-  Name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  IsAdmin: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  }
+  Name: { type: DataTypes.STRING, allowNull: false },
+  Email: { type: DataTypes.STRING, allowNull: false },
+  Password: { type: DataTypes.STRING, allowNull: false },
+  IsAdmin: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
 }, {
   sequelize,
   tableName: 'UserTb',

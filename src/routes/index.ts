@@ -12,6 +12,8 @@ import uploadRouter from './uploadRouter';
 import { EBrand, EConfort, EFuelType, ESteering, ETraction, ETransmision } from '../enums/enums';
 import { createLog, getAll } from '../controllers/logController';
 import { infoController } from '../controllers/infoController';
+import { addBanner, getBanners, removeBanner, updateOrderBanner } from '../controllers/bannerController';
+import { checkOrderUnique } from '../midwares/bannerMidware';
 
 const router = Router();
 
@@ -19,7 +21,6 @@ router.post('/api/v1/user', userCreateMidware, CreateUser);
 router.get('/api/v1/user', GetUser)
 router.get('/api/v1/user/:id', userByIdMiddleware, GetUserById)
 router.delete('/api/v1/user/:id', userByIdMiddleware, RemoveUser)
-//fazer update de senha
 
 router.post('/api/v1/auth', authMiddleware,Auth)
 
@@ -42,9 +43,12 @@ router.get('/api/v1/log', getAll);
 router.get('/api/v1/info/:id', infoController.infoGet)
 router.put('/api/v1/info/:id', infoController.infoPut)
 router.put('/api/v1/incrementBrand/:id', infoController.infoIncrementBrand)
-
 router.post('/api/v1/info', infoController.infoCreate)
 
+router.get("/api/v1/banner", getBanners);
+router.post("/api/v1/banner", checkOrderUnique,addBanner);
+router.delete("/api/v1/banner/:id", removeBanner);
+router.patch('/api/v1/banner/:id', checkOrderUnique, updateOrderBanner);
 
 router.get('/api/v1/enums', (req, res) => {
   res.json({

@@ -8,20 +8,9 @@ class Log extends Model {
 }
 
 Log.init({
-  IDLog: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  Description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  Date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
+  IDLog: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  Description: { type: DataTypes.STRING, allowNull: false },
+  Date: { type: DataTypes.DATE, allowNull: false },
 }, {
   sequelize,
   tableName: 'logTb',

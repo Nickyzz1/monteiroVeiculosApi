@@ -29,4 +29,28 @@ const sequelize = new Sequelize(
   }
 );
 
+// (async () => {
+//   try {
+//     await sequelize.authenticate();
+//     console.log('Conexão ok');
+
+//     // Cria tabelas sem se preocupar com defaults
+//     await sequelize.sync({ alter: true });
+
+//     // Depois aplica os defaults manualmente
+//     await sequelize.query(`
+//       IF NOT EXISTS (
+//         SELECT * FROM sys.default_constraints
+//         WHERE object_id = OBJECT_ID(N'[DF_UserTb_IsAdmin]')
+//       )
+//       ALTER TABLE UserTb
+//       ADD CONSTRAINT DF_UserTb_IsAdmin DEFAULT 0 FOR IsAdmin;
+//     `);
+
+//     console.log('Defaults aplicados');
+//   } catch (err) {
+//     console.error('Erro:', err);
+//   }
+// })();
+
 export default sequelize;
