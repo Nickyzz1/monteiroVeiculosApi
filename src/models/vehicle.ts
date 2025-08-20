@@ -77,7 +77,7 @@ Vehicle.init({
   ReverseCamera: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   Radio: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   Airbags: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
-  Description: { type: DataTypes.STRING, allowNull: true },
+  Description: { type: DataTypes.STRING(1000), allowNull: true },
   Images: {
     type: DataTypes.TEXT,
     allowNull: true,

@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { InfoService } from '../services/infoService';
+import Info from '../models/infos';
 
 
 export class infoController  {
@@ -39,22 +40,32 @@ export class infoController  {
       }
     };
 
-    static infoIncrementBrand = async (req: Request, res: Response) => {
-      try {
-        const id = Number(req.params.id);
-        if (isNaN(id)) {
-          return res.status(400).json({ error: 'ID inválido' });
-        }
+   static infoIncrementBrand = async (req: Request, res: Response) => {
+  try {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' });
+    }
 
-        const { brand } = req.body;
-        if (!brand) return res.status(400).json({ error: 'Marca não informada' });
+    const { brand } = req.body;
+    if (!brand) return res.status(400).json({ error: 'Marca não informada' });
 
-        const updated = await InfoService.incrementBrand(id, brand);
-        res.json({ message: `Marca ${brand} incrementada`, info: updated });
-      } catch (err: any) {
-        res.status(500).json({ error: err.message });
-      }
-    };
+    // busca o registro
+    const info = await Info.findByPk(id);
+    if (!info) return res.status(404).json({ error: 'Registro não encontrado' });
+
+    // pega valor atual e incrementa
+    const currentValue = (info.get(brand) as number) || 0;
+    const updatedValue = currentValue + 1;
+
+    // atualiza no banco
+    await info.update({ [brand]: updatedValue });
+
+    return res.json({ message: `Marca ${brand} incrementada`, info: info });
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message });
+  }
+};
 
 }
 

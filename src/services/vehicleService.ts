@@ -35,6 +35,9 @@ export const createVehicle = async (req: Request) => {
       Airbags: data.Airbags,
       Images: data.Images,
       IsActive: data.IsActive,
+      Radio: data.Radio,
+      Alarm: data.Alarm,
+      Description: data.Description,
     });
 
     LogService.createLog({
@@ -71,6 +74,7 @@ export const removeVehicle = async (req: Request) => {
 export const updateVehicle = async (req: Request) => {
     const id = req.params.id;
     const vehicle = await Vehicle.findByPk(id);
+    console.log(req.body)
     const updatedFields: any = {};
     for (const key in req.body) {
       if (req.body[key] !== null && req.body[key] !== undefined) {
