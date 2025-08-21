@@ -1,13 +1,8 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from "../config/database";
 
-class User extends Model {
-  IDUser!: number;
-  Name!: string;
-  Email!: string;
-  Password!: string;
-  IsAdmin!: boolean;
-}
+// NÃO declare campos públicos aqui, deixe o Sequelize gerenciar
+class User extends Model {}
 
 User.init({
   IDUser: {

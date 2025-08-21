@@ -16,7 +16,7 @@ function passGenerator(quantidade: number, min: number, max: number): string {
 export const CreateUser = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    const users = await createUser(data?.Name, data?.Email);
+    const users = await createUser(data?.Name, data?.Email, data?.Password);
     return res.status(201).json(users);
   } catch (err) {
         console.error("Erro ao criar usuário:", err);

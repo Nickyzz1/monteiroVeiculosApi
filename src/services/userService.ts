@@ -12,10 +12,10 @@ function passGenerator(quantidade: number, min: number, max: number): string {
   return numeros.join('');
 }
 
-export const createUser = async (Name: string, Email: string) => {
+export const createUser = async (Name: string, Email: string, Password: string) => {
 
-  const password = passGenerator(6, 0, 9);
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // const password = passGenerator(6, 0, 9);
+  const hashedPassword = await bcrypt.hash(Password, 10);
   const user = await User.create({ Name : Name, Email: Email, Password: hashedPassword, IsAdmin: 1});
   return user;
 };
